@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mascotita</title>
+    {% load static %}
+    <link rel="icon" href="{% static 'img/MASCOTITASHOP-LOGO.ico' %}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/marcelo.css' %}" rel="stylesheet">
+    <link href="{% static 'css/estilos.css' %}" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/6a2db6b284.js" crossorigin="anonymous"></script>
+
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-md navbar-light bg-light mb-4" id="barraNav">
+        <a href="{% url 'index' %}" id="">
+            <img src="{% static 'img/MASCOTITASHOP-LOGO.png' %}" alt="" width="40px">MascotitaShop
+        </a>
+        <!-- botón hamburguesa -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+            aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            
+           
+            {% if user.is_authenticated %}
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'index' %}">Inicio</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'quienes_somos' %}">Quienes Somos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'productos' %}">Productos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Donaciones</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'adopta' %}">Adopta</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'producto_crear' %}">Crear</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Modificar</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'mostrar' %}">Mostrar</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Bienvenid@ {{ user.username }}</a>
+                </li>
+
+                
+                {% else %}
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'index' %}">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'quienes_somos' %}">Quienes Somos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'productos' %}">Productos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Donaciones</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'adopta' %}">Adopta</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'registrar' %}">Registrarse</a>
+                    </li>
+                    
+                </ul>
+            </ul>
+            {% endif %}
+            <form class="form-inline mt-2 mt-md-0">
+                <input class="form-control mr-sm-2" type="text" placeholder="¿Qué libro buscas?" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit" id="btnBuscar">Buscar</button>
+            </form>
+             <div>
+                {% if user.is_authenticated %}
+                <form action="{% url 'logout' %}" method="post" id="logoutForm">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-link">
+                        <img src="{% static 'img/user-vector-icon.png' %}" alt="userBookStop" width="20px">Cerrar sesión
+                    </button>
+                </form>
+                
+                <script>
+                    document.getElementById("logoutForm").addEventListener("submit", function(event) {
+                        event.preventDefault();  // Evitar que se envíe el formulario de inmediato
+                        fetch(this.action, {
+                            method: this.method,
+                            headers: {
+                                "X-CSRFToken": this.elements.csrfmiddlewaretoken.value
+                            }
+                        })
+                        .then(function(response) {
+                            // Redirigir al usuario a la página de inicio
+                            window.location.href = "{% url 'index' %}";
+                        })
+                        .catch(function(error) {
+                            console.error(error);
+                        });
+                    });
+                </script>
+                {% else %} 
+                <a href="{% url 'login' %}" id="userBookStop">
+                    <img src="{% static 'img/user-vector-icon.png' %}" 
+                        alt="userBookStop" width="20px">Iniciar sesión
+                </a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+
+    {% block content %}
+
+    {% endblock %}
+
+
+</body>
+</html>

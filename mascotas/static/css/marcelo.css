@@ -1,0 +1,30 @@
+.parrafo-color {
+    color: blue; /* Cambia "blue" por el color que desees */
+}
+
+.texto{
+    color: #A2CDE6;
+    
+}
+
+body {
+    background-image: url('/static/img/prueba 2.jpg');
+}
+
+#carousel1{
+    position: relative;
+    z-index: 0;
+}
+
+.navbar{
+    -webkit-box-shadow:0px 2px 2px #dddddd;
+    -moz-box-shadow:0px 2px 2px #dddddd;
+    box-shadow:0px 2px 2px #dddddd;
+    position: fixed;
+    z-index: 1;
+    display: flex;
+    transition: 0.3s;
+    width: 100%;
+    top: 0;
+}
+

@@ -1,0 +1,186 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1 , shrink-to-fit=no">
+    <title>Quienes Somos</title>
+    {% load static %}
+    <link rel="icon" href="{% static 'img/MASCOTITASHOP-LOGO.ico' %}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/marcelo.css' %}" rel="stylesheet">
+    <link href="{% static 'css/estilos.css' %}" rel="stylesheet">
+    <script src="{% static 'js/script.js' %}"></script>
+    <script src="https://kit.fontawesome.com/6a2db6b284.js" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.js"></script>
+
+    
+    
+</head>
+
+
+<body>
+   
+
+    
+  
+
+        <hr>
+        <div class="row jumbotron" id="qSomos">
+            <div class="col-lg-6">
+                <div>
+                    <h2 style="color: #198bb8; font-family: cursive;">¿Quiénes Somos? </h2><br>
+                    <h2 class="lead"style="color: #198bb8; font-family: cursive;" ><strong>Ademas de una tiendita para perritos y gatitos </strong></h2><br>
+                    <p style="color: #198b; font-family: cursive;">
+                     Bienvenido a Mascotica Shop, una tienda dedicada al amor por los animales y comprometida con su bienestar.
+                     Somos un emprendimiento chileno que nació en Santiago en 2023, impulsado por un grupo de amigas con una misión 
+                     común: ayudar a fundaciones de mascotas sin fines de lucro.
+                    </p><br>
+                    <p style="color: #198b; font-family: cursive;">
+                     En Mascotica Shop, nos especializamos en la venta de bandanas hechas a mano, correas e identificadores para perritos y gatitos. 
+                     Cada compra que realizas en nuestra tienda contribuye directamente al cuidado y alimentación de aquellos animales más necesitados. 
+                     Trabajamos en estrecha colaboración con fundaciones como "Ayuda Callejeros", que se dedican a proteger y mejorar la calidad de vida de perritos y gatitos abandonados o maltratados.
+                    </p><br>
+                    <p style="color: #198b; font-family: cursive;">
+                     Al regalonear a tus mascotitas con nuestros productos, no solo les brindas estilo y comodidad, sino que también les estás otorgando una oportunidad de tener un hogar y una familia.
+                     Nuestro compromiso va más allá de ser una tienda, queremos ser un puente de esperanza para aquellos animales que han sufrido y necesitan una segunda oportunidad.
+
+                    </p><br><br>
+                        
+                    <p style="color: #198bb8; font-family: cursive;">
+                        En el Siguiente boton pueden donar a nuestras fundaciones , ademas obtendran un 5% de descuento en el total de su compra.
+                        <a href="#" class="btn btn-primary col-12">Donar</a>
+                    </p>  
+                        
+
+                        
+                    
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <video class="img-fluid" controls>
+                    <source src="{% static 'video/ayuda.mp4' %}" type="video/mp4">
+                    Tu navegador no admite la reproducción de videos.
+                </video>
+            </div>
+        </div>
+        <hr><br>
+        <div>
+            <div class="row">
+
+                <div class="col-md">
+                    <div class="card text-center">
+                        <div class="card-body">
+                            <h2 style="color: #198bb8; font-family: cursive;">Mision </h2><br>
+                            <h2 class="lead"style="color: #198b; font-family: cursive;"><strong>Nuestra misión es ser una tienda de mascotas comprometida con el bienestar animal y 
+                                la responsabilidad social. Nos dedicamos a ofrecer productos de alta calidad para mascotas, brindando a los
+                                dueños la oportunidad de consentir a sus adorables compañeros. A través de nuestras ventas y tienda, apoyamos 
+                                activamente a fundaciones de animales en abandono, contribuyendo a mejorar la vida de aquellos que más lo necesitan. </strong></h2>       
+                        </div>
+                        <img class="card-img-top mx-auto " src="{% static 'img/quien1.jpeg' %}" style="width: 45%; height: 45%; object-fit: cover;" >
+                        
+                    </div>
+                </div>
+
+                <div class="col-md">
+                    <div class="card text-center">
+                        <div class="card-body">
+                            <h2 style="color: #198bb8; font-family: cursive;" >Vision</h2><br>
+                            <h2 class="lead"style="color: #198b; font-family: cursive;"><strong>Nuestra visión es convertirnos en líderes del mercado de productos para mascotas, reconocidos por
+                                nuestra calidad, compromiso social y pasión por los animales. Queremos ser una tienda de referencia para los amantes 
+                                de las mascotas, ofreciendo una amplia gama de productos y servicios que satisfagan todas sus necesidades. Además, 
+                                aspiramos a generar un impacto positivo en la sociedad, trabajando en colaboración con fundaciones de animales en abandono.</strong></h2>
+                        </div>
+                        <img class="card-img-top mx-auto" src="{% static 'img/quien2.jpeg' %}" style="width: 60%; height: 60%; object-fit: cover;" >
+                       
+                    </div>
+                </div>
+
+                
+
+            </div>
+        </div>
+        <hr><br>
+        
+
+        
+
+    </main><br>
+    <footer>
+        <div class="row col-12">
+            <div class="col-lg-2">
+                <a href="{% url 'index' %}"><img src="{% static 'img/MASCOTITASHOP-LOGO.png' %}" href="{% url 'index' %}" alt="logoBookStop" width="60px"></a>
+            </div>
+            <div class="col-lg-1">
+                <a href="{% url 'index' %}" id="linkFooter"style="color: #198b; font-family: cursive;" ><strong>Inicio</strong></a>
+            </div>
+            <div class="col-lg-1">
+                <a href="{% url 'quienes_somos' %}" id="linkFooter"style="color: #198b; font-family: cursive;"><strong>Quienes Somos</strong></a>
+            </div>
+            <div class="col-lg-1">
+                <a href="{% url 'productos' %}" id="linkFooter"style="color: #198b; font-family: cursive;"><strong>Productos</strong></a>
+            </div>
+            <div class="col-lg-2">
+                <a href="{% url 'index' %}" id="linkFooter"style="color: #198b; font-family: cursive;"><strong>Donaciones</strong></a>
+            </div>
+
+            <div class="col-lg-2">
+                <strong style="color: #198b; font-family: cursive;">Síguenos</strong>
+                <br><br>
+                <div class="row">
+                    <a href="https://www.facebook.com/"><img src="{% static 'img/fb.png' %}" alt="" width="30px" height="30px"style=" margin-left: 15px;"></a>
+                    <a href="https://www.instagram.com/"><img src="{% static 'img/instagram.png' %}" alt="" width="30px" height="30px" style=" margin-left: 10px;"></a>
+                    <a href="https://www.twitter.com/"><img src="{% static 'img/twitter.png' %}" alt="" width="30px" height="30px" style=" margin-left: 10px;"></a>
+
+                </div>
+            </div>
+
+
+            <div class="col-lg-3">
+
+                <strong style="color: #198b; font-family: cursive;">Contacto</strong>
+                <br><br>
+                <div class="row">
+                    <img src="{% static 'img/MASCOTITASHOP-LOGO.png' %}" alt="" width="20px" height="20px"
+                        style="margin-right: 10px; margin-left: 15px;">
+                    <p>Av. Miraflores , Peñaflor</p>
+                </div>
+                <div class="row">
+                    <img src="{% static 'img/MASCOTITASHOP-LOGO.png' %}" alt="" width="20px" height="20px"
+                        style="margin-right: 10px; margin-left: 15px;">
+                    <p>+56988079091</p>
+                </div>
+                <div class="row">
+                    <img src="{% static 'img/MASCOTITASHOP-LOGO.png' %}" alt="" width="20px" height="20px"
+                        style="margin-right: 10px; margin-left: 15px;">
+                    <p>info@mascotitashop.cl</p>
+                </div>
+                <br><br><br>
+
+                <p>&copy; MACOTITASSHOP - 2023</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- script que permite mostrar/ocultar navbar haciendo scroll -->
+    <script type="text/javascript">
+        let ubicacionInicial = window.pageYOffset;
+        window.onscroll = function () {
+            let ubicacionPosterior = window.pageYOffset;
+            if (ubicacionInicial >= ubicacionPosterior) {
+                document.getElementById("barraNav").style.top = "0";
+            }
+            else {
+                document.getElementById("barraNav").style.top = "-70px";
+            }
+            ubicacionInicial = ubicacionPosterior
+        }
+    </script>
+</body>
+</html>
+{% endblock %}

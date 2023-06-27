@@ -1,0 +1,126 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>mostrar</title>
+    {% load static %}
+    <link rel="icon" href="{% static 'img/MASCOTITASHOP-LOGO.ico' %}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/marcelo.css' %}" rel="stylesheet">
+    <link href="{% static 'css/estilos.css' %}" rel="stylesheet">
+    <script src="{% static 'js/script.js' %}"></script>
+    <script src="https://kit.fontawesome.com/6a2db6b284.js" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.js"></script>
+</head>
+<body>
+  <table id="animals">
+    <tr>
+      <th>Nombre</th>
+      <th>Especie</th>
+      <th>Raza</th>
+      <th>Edad</th>
+      <th>Sexo</th>
+      <th>Tamaño</th>
+      <th>Descripción</th>
+      <th>Foto</th>
+    </tr>
+    {% for animal in animals %}
+    <tr>
+      <td>{{ animal.name }}</td>
+      <td>{{ animal.species }}</td>
+      <td>{{ animal.breeds.primary }}</td>
+      <td>{{ animal.age }}</td>
+      <td>{{ animal.gender }}</td>
+      <td>{{ animal.size }}</td>
+      <td>{{ animal.description }}</td>
+      <td>
+        {% if animal.photos %}
+          {% for photo in animal.photos %}
+            <img src="{{ photo.medium }}" alt="Foto del animal"/>
+          {% endfor %}
+        {% endif %}
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+
+  <footer>
+    <div class="row col-12">
+        <div class="col-lg-2">
+            <a href="{% url 'index' %}"><img src="{% static 'img/MASCOTITASHOP-LOGO.png' %}" href="{% url 'index' %}" alt="logoBookStop" width="60px"></a>
+        </div>
+        <div class="col-lg-1">
+            <a href="{% url 'index' %}" id="linkFooter"style="color: #198b; font-family: cursive;" ><strong>Inicio</strong></a>
+        </div>
+        <div class="col-lg-1">
+            <a href="{% url 'quienes_somos' %}" id="linkFooter"style="color: #198b; font-family: cursive;"><strong>Quienes Somos</strong></a>
+        </div>
+        <div class="col-lg-1">
+            <a href="{% url 'productos' %}" id="linkFooter"style="color: #198b; font-family: cursive;"><strong>Productos</strong></a>
+        </div>
+        <div class="col-lg-2">
+            <a href="{% url 'index' %}" id="linkFooter"style="color: #198b; font-family: cursive;"><strong>Donaciones</strong></a>
+        </div>
+
+        <div class="col-lg-2">
+            <strong style="color: #198b; font-family: cursive;">Síguenos</strong>
+            <br><br>
+            <div class="row">
+                <a href="https://www.facebook.com/"><img src="{% static 'img/fb.png' %}" alt="" width="30px" height="30px"style=" margin-left: 15px;"></a>
+                <a href="https://www.instagram.com/"><img src="{% static 'img/instagram.png' %}" alt="" width="30px" height="30px" style=" margin-left: 10px;"></a>
+                <a href="https://www.twitter.com/"><img src="{% static 'img/twitter.png' %}" alt="" width="30px" height="30px" style=" margin-left: 10px;"></a>
+
+            </div>
+        </div>
+
+
+        <div class="col-lg-3">
+
+            <strong style="color: #198b; font-family: cursive;">Contacto</strong>
+            <br><br>
+            <div class="row">
+                <img src="{% static 'img/MASCOTITASHOP-LOGO.png' %}" alt="" width="20px" height="20px"
+                    style="margin-right: 10px; margin-left: 15px;">
+                <p>Av. Miraflores , Peñaflor</p>
+            </div>
+            <div class="row">
+                <img src="{% static 'img/MASCOTITASHOP-LOGO.png' %}" alt="" width="20px" height="20px"
+                    style="margin-right: 10px; margin-left: 15px;">
+                <p>+56988079091</p>
+            </div>
+            <div class="row">
+                <img src="{% static 'img/MASCOTITASHOP-LOGO.png' %}" alt="" width="20px" height="20px"
+                    style="margin-right: 10px; margin-left: 15px;">
+                <p>info@mascotitashop.cl</p>
+            </div>
+            <br><br><br>
+
+            <p>&copy; MACOTITASSHOP - 2023</p>
+        </div>
+    </div>
+</footer>
+
+<!-- script que permite mostrar/ocultar navbar haciendo scroll -->
+<script type="text/javascript">
+    let ubicacionInicial = window.pageYOffset;
+    window.onscroll = function () {
+        let ubicacionPosterior = window.pageYOffset;
+        if (ubicacionInicial >= ubicacionPosterior) {
+            document.getElementById("barraNav").style.top = "0";
+        }
+        else {
+            document.getElementById("barraNav").style.top = "-70px";
+        }
+        ubicacionInicial = ubicacionPosterior
+    }
+</script>
+</body>
+</html>
+{% endblock %}
