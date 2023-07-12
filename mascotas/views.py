@@ -1,10 +1,12 @@
-import requests
+
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.views import LoginView
 from .forms import ProductoForm,RegistroUserForm
-from .models import Producto
+from .models import *
+from mascotas.compra import Carrito
+
 
 def index(request):
     return render(request, 'index.html')
@@ -19,6 +21,9 @@ def productos(request):
 def adopta(request):
     return render(request, 'adopta.html')
 
+def sinresgistro(request):
+    return render(request, 'sinregistro.html')
+
 def test(request):
     return render(request, 'test.html')
 
@@ -29,42 +34,10 @@ def mostrar_animales(request):
         "Content-Type": "application/json"
     }
 
-    response = requests.get(url, headers=headers)
+    response = request.get(url, headers=headers)
     animals = response.json().get("animals", [])
 
     return render(request, "mostrar_animales.html", {"animals": animals})
-
-def producto_crear(request):
-    if request.method == 'POST':
-        form = ProductoForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
-            return redirect('productos')
-    else:
-        form = ProductoForm()
-    
-    return render(request, 'producto_crear.html', {'form': form})
-
-
-
-def mostrar(request):
-    productos = Producto.objects.all()
-    datos = {
-        'productos': productos
-    }
-    return render(request, 'mostrar.html', datos)
-
-def modificar(request, id):
-    productoModificado = Producto.objects.get(id=id)  # buscamos el objeto
-    datos = {
-        'form': ProductoForm(instance=productoModificado)
-    }
-    if request.method == "POST":
-        formulario = ProductoForm(request.POST, request.FILES, instance=productoModificado)
-        if formulario.is_valid():
-            formulario.save()
-            return redirect('otra')
-    return render(request, 'modificar.html', datos)
 
 def registrar(request):
     data = {
@@ -88,3 +61,112 @@ def logout_view(request):
 class CustomLoginView(LoginView):
     def get_success_url(self):
         return '/'
+    
+def donaciones_view(request):
+    return render(request, 'donaciones.html')
+
+
+
+
+
+#CRUD PRODUCTO
+
+
+def mostrarPro(request):
+    #obtenemos todos los vehiculos almacenados en la clase
+    producto = Producto.objects.all()
+    #creamos un diccionario
+    datos={
+        'productos':producto
+    }
+    #devolvemos a un template el diccionario y su contenido
+    return render(request, 'mostrarproducto.html', datos)
+#Producto
+def eliminarPro(request, id):
+    producto = Producto.objects.get(codigo=id)
+    producto.delete()
+    return redirect('mostrarProducto')
+
+
+def crearPro(request):
+    if request.method=='POST': 
+        productoForm = ProductoForm(request.POST,request.FILES)
+        if productoForm.is_valid():
+            productoForm.save()     #similar al insert
+            return redirect('mostrarProducto')
+    else:
+        productoForm=ProductoForm()
+    return render(request, 'crearproducto.html', {'productoForm':productoForm})
+
+
+def modificarPro(request, id):
+    producto = Producto.objects.get(codigo=id) #buscamos el objeto x patente = id
+    datos ={
+        'form': ProductoForm(instance=producto) #instanciamos el obj. en un obj. de tipo formulario
+    }
+    #el siguiente bloque modifica el contenido del objeto almacenado
+    if request.method=='POST':
+        formulario = ProductoForm(data=request.POST, instance=producto)
+        if formulario.is_valid:
+            formulario.save()
+            return redirect('mostrarProducto')
+    
+    return render(request, 'modificarproducto.html', datos)
+
+#tienda
+
+def tienda(request):
+    producto = Producto.objects.all()
+    datos={
+        'productos':producto
+    }
+    return render(request, 'tienda.html', datos)
+
+
+def agregar_producto(request,id):
+    carrito_compra= Carrito(request)
+    producto = Producto.objects.get(codigo=id)
+    carrito_compra.agregar(producto=producto)
+    return redirect('tienda')
+
+def eliminar_producto(request, id):
+    carrito_compra= Carrito(request)
+    productos = Producto.objects.get(codigo=id)
+    carrito_compra.eliminar(productos=productos)
+    return redirect('tienda')
+
+def restar_producto(request, id):
+    carrito_compra= Carrito(request)
+    productos = Producto.objects.get(patente=id)
+    carrito_compra.restar(productos=productos)
+    return redirect('tienda')
+
+def limpiar_carrito(request):
+    carrito_compra= Carrito(request)
+    carrito_compra.limpiar()
+    return redirect('tienda')    
+
+
+def generarBoleta(request):
+    precio_total=0
+    for key, value in request.session['carrito'].items():
+        precio_total = precio_total + int(value['precio']) * int(value['cantidad'])
+    boleta = Boleta(total = precio_total)
+    boleta.save()
+    productos = []
+    for key, value in request.session['carrito'].items():
+            producto = Producto.objects.get(codigo = value['codigo'])
+            cant = value['cantidad']
+            subtotal = cant * int(value['precio'])
+            detalle = detalle_boleta(id_boleta = boleta, id_producto = producto, cantidad = cant, subtotal = subtotal)
+            detalle.save()
+            productos.append(detalle)
+    datos={
+        'productos':productos,
+        'fecha':boleta.fechaCompra,
+        'total': boleta.total
+    }
+    request.session['boleta'] = boleta.id_boleta
+    carrito = Carrito(request)
+    carrito.limpiar()
+    return render(request, 'detallecarrito.html',datos)

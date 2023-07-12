@@ -9,10 +9,7 @@ class RegistroUserForm(UserCreationForm):
         model = User
         fields = ['username', 'first_name', 'last_name', 'email', 'password1', 'password2']
 
-class ProductoForm(forms.ModelForm):
-    class Meta:
-        model = Producto
-        fields = ['nombre', 'imagen']
+
 
 class ProductoForm(forms.ModelForm):
     class Meta:
@@ -46,7 +43,8 @@ class ProductoForm(forms.ModelForm):
                 'id': 'cantidad',
                 'class': 'form-control',
             }),
-            'imagen': forms.ClearableFileInput(attrs={
+            'imagen': forms.FileInput(
+                attrs={
                 'class': 'form-control',
                 'id': 'imagen',
             })

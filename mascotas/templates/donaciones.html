@@ -1,0 +1,155 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1 , shrink-to-fit=no">
+    <title>Donaciones</title>
+    {% load static %}
+    <link rel="icon" href="{% static 'img/MASCOTITASHOP-LOGO.ico' %}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/estilos.css' %}" rel="stylesheet">
+    
+    <script src="https://kit.fontawesome.com/6a2db6b284.js" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.js"></script>
+    <style>
+        .mi-error-class {
+            color: red; /* Cambia el color del mensaje de error a rojo */
+            font-size: 14px; /* Cambia el tamaño de fuente del mensaje de error */
+            /* Otros estilos que desees aplicar al mensaje de error */
+        }
+    </style>
+
+    
+    
+</head>
+
+<body>
+
+
+
+
+<div class="row jumbotron" id="qSomos">
+    <div class="col-lg-6">
+        <br><br><br>
+        <div>
+            <h2 style="color: #198bb8; font-family: cursive;" >Bienvenido al Sistema de Donaciones</h2><br>
+            
+                          
+        </div>
+        
+        <div class="container">  
+            <form id="mi-Formulario" action="#" method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="nom" class="lf">Nombre Completo:</label>
+                    <input type="text" name="nom" id="nom" minlength="3" required placeholder="Nombre Donante" class="form-control" onchange="upperText(this)">
+                </div>
+                <div class="form-group">
+                   <label for="email" class="lf">Correo Electrónico:</label>
+                   <input type="email" name="email" id="email" required placeholder="email@dominio.com" class="form-control" onchange="upperText(this)">
+                </div>
+                <div class="form-group">
+                    <label for="fono" class="lf">Telefono de contacto:</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">+56</span>
+                        </div>
+                        <input type="number" name="fono" id="fono" minlength="9" required class="form-control">
+                        <label for="fono" class="error"></label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="monto" class="lf">Monto a Donar:</label>
+                    <input type="number" name="monto" id="monto" required placeholder="$1" class="form-control" inputmode="numeric" step="any">
+                </div>
+                <div class="form-group">
+                    <label for="comentario" class="lf">Comentarios:</label>
+                    <textarea name="comentario" id="comentario" placeholder="Ingresa un comentario adicional" class="form-control" rows="7" onmousemove="colorOrange(this)" onmouseout="colorBlanco(this)"></textarea>
+                </div>
+                
+                <input type="submit" value="Enviar" id="enviar" class="btn btn-success" onclick="mostrarMensaje()"> 
+                <input type="reset" value="Limpiar" id="limpiar" class="btn btn-warning">     
+            </form>
+            
+        </div>
+    </div>
+    
+</div>
+<script>
+    function mostrarMensaje() {
+        var formulario = document.getElementById("mi-Formulario");
+    var elementos = formulario.elements;
+    var formularioCompleto = true;
+
+    // Verificar si algún campo está vacío
+    for (var i = 0; i < elementos.length; i++) {
+        if (elementos[i].value === "") {
+            formularioCompleto = false;
+            break;
+        }
+    }
+
+    // Mostrar el mensaje correspondiente
+    if (formularioCompleto) {
+        alert("En Su Correo Tendrá Un Cupon De 5% De Descuento");
+    } else {
+        alert("Rellene el formulario primero");
+    }
+    }
+
+    
+
+    $(function() {
+        $("#mi-Formulario").validate({
+            rules: {
+                nom: {
+                    required: true,
+                    minlength: 3
+                },
+                email: {
+                    required: true,
+                    email: true
+                },
+                fono: {
+                    required: true,
+                    number: true,
+                    minlength: 9
+                },
+                monto: {
+                    required: true,
+                    min: 1
+                }
+            },
+            messages: {
+            nom: {
+                required: 'Ingrese nombre del usuario',
+                minlength: 'Caracteres insuficientes (mínimo 3)'
+            },
+            email: {
+                required: 'Ingresa tu correo electrónico',
+                email: 'Formato de correo no válido'
+            },
+            fono: {
+                required: 'Ingrese un número de celular',
+                minlength: 'Cantidad de dígitos insuficiente (mínimo 9)'
+            },
+            monto: {
+                required: 'Ingrese el monto de donación',
+                min: 'El valor ingresado debe ser de $1 o mayor'
+            }
+        },
+        errorClass: 'mi-error-class' // Nombre de la clase CSS para el estilo del mensaje de error
+    });
+});
+</script>
+    
+
+
+</body>
+</html>
+{% endblock %}

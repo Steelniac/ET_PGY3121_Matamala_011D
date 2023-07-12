@@ -9,7 +9,7 @@
     <link rel="icon" href="{% static 'img/MASCOTITASHOP-LOGO.ico' %}" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
-    <link href="{% static 'css/marcelo.css' %}" rel="stylesheet">
+    
     <link href="{% static 'css/estilos.css' %}" rel="stylesheet">
     <script src="https://kit.fontawesome.com/6a2db6b284.js" crossorigin="anonymous"></script>
 
@@ -34,7 +34,7 @@
     <nav class="navbar navbar-expand-md navbar-light bg-light mb-4" id="barraNav">
         <a href="{% url 'index' %}" id="">
             <img src="{% static 'img/MASCOTITASHOP-LOGO.png' %}" alt="" width="40px">MascotitaShop
-        </a>
+        | | | | | </a>
         <!-- botón hamburguesa -->
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
             aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
@@ -43,31 +43,17 @@
         <div class="collapse navbar-collapse" id="navbarCollapse">
             
            
-            {% if user.is_authenticated %}
+           {% if user.is_authenticated %}
+           {% if user.username == "marcelino" %}
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'index' %}">Inicio</a>
+                    <a class="nav-link" href="{% url 'tienda' %}">Productos</a>
+                </li>                                                
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'crearproducto' %}">Crear Productos</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'quienes_somos' %}">Quienes Somos</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'productos' %}">Productos</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Donaciones</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'adopta' %}">Adopta</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'producto_crear' %}">Crear</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Modificar</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'mostrar' %}">Mostrar</a>
+                    <a class="nav-link" href="{% url 'mostrarProducto' %}">Mostrar Productos</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Bienvenid@ {{ user.username }}</a>
@@ -83,10 +69,34 @@
                         <a class="nav-link" href="{% url 'quienes_somos' %}">Quienes Somos</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="{% url 'tienda' %}">Productos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'donaciones' %}">Donaciones</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'adopta' %}">Adopta</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Bienvenid@ {{ user.username }}</a>
+                    </li>
+                    
+                </ul>
+                {% endif %}
+                {% else %}
+                <ul class="navbar-nav mr-auto">
+                    <!-- Enlaces para usuarios no autenticados -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'index' %}">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'quienes_somos' %}">Quienes Somos</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="{% url 'productos' %}">Productos</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Donaciones</a>
+                        <a class="nav-link" href="{% url 'donaciones' %}">Donaciones</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'adopta' %}">Adopta</a>
@@ -94,10 +104,10 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'registrar' %}">Registrarse</a>
                     </li>
-                    
                 </ul>
+                {% endif %}
             </ul>
-            {% endif %}
+            
             <form class="form-inline mt-2 mt-md-0">
                 <input class="form-control mr-sm-2" type="text" placeholder="¿Qué libro buscas?" aria-label="Search">
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit" id="btnBuscar">Buscar</button>
@@ -107,7 +117,7 @@
                 <form action="{% url 'logout' %}" method="post" id="logoutForm">
                     {% csrf_token %}
                     <button type="submit" class="btn btn-link">
-                        <img src="{% static 'img/user-vector-icon.png' %}" alt="userBookStop" width="20px">Cerrar sesión
+                        <i class="fa-solid fa-user"></i>Cerrar sesión
                     </button>
                 </form>
                 
@@ -131,8 +141,7 @@
                 </script>
                 {% else %} 
                 <a href="{% url 'login' %}" id="userBookStop">
-                    <img src="{% static 'img/user-vector-icon.png' %}" 
-                        alt="userBookStop" width="20px">Iniciar sesión
+                    <i class="fa-solid fa-user"></i>Iniciar sesión
                 </a>
                 {% endif %}
             </div>

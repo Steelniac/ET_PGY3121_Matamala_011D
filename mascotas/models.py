@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+import datetime
 
 class Animal(models.Model):
     name = models.CharField(max_length=100)
@@ -15,36 +16,32 @@ class Animal(models.Model):
         return self.name
     
 class Producto(models.Model):
-    codigo = models.CharField(max_length=20, unique=True)
+    codigo = models.CharField(primary_key=True, max_length=10, unique=True)
     nombre = models.CharField(max_length=100)
-    precio = models.DecimalField(max_digits=10, decimal_places=2)
+    precio=models.IntegerField(blank=True, null=True, verbose_name="Precio")
     cantidad = models.PositiveIntegerField(default=0)
     imagen = models.ImageField(upload_to='producto_imagenes', null=True, blank=True)
-
-    # Otros atributos que puedas necesitar
 
     def __str__(self):
         return self.nombre
+    
+#boleta
+class Boleta(models.Model):
+    id_boleta=models.AutoField(primary_key=True)
+    total=models.BigIntegerField()
+    fechaCompra=models.DateTimeField(blank=False, null=False, default = datetime.datetime.now)
+    
+    def __str__(self):
+        return str(self.id_boleta)
 
-class Carrito(models.Model):
-    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
-    producto_relacionado = models.ManyToManyField(Producto, through='ItemCarrito', related_name='carritos')
+class detalle_boleta(models.Model):
+    id_boleta = models.ForeignKey('Boleta', blank=True, on_delete=models.CASCADE)
+    id_detalle_boleta = models.AutoField(primary_key=True)
+    id_producto = models.ForeignKey('Producto', on_delete=models.CASCADE)
+    cantidad = models.IntegerField()
+    subtotal = models.BigIntegerField()
 
-    def total(self):
-        return sum(item.subtotal() for item in self.items.all())
+    def __str__(self):
+        return str(self.id_detalle_boleta)
 
-class ItemCarrito(models.Model):
-    carrito = models.ForeignKey(Carrito, on_delete=models.CASCADE, related_name='items')
-    producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
-    cantidad = models.PositiveIntegerField(default=0)
-
-    def subtotal(self):
-        return self.producto.precio * self.cantidad
-
-class Productost(models.Model):
-    codigo = models.CharField(primary_key=True ,max_length=10, unique=True)
-    nombre = models.CharField(max_length=100)
-    precio = models.DecimalField(max_digits=10, decimal_places=2)
-    cantidad = models.PositiveIntegerField(default=0)
-    imagen = models.ImageField(upload_to='producto_imagenes', null=True, blank=True)
     
